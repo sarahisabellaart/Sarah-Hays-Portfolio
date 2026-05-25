@@ -32,7 +32,6 @@
       font-weight: 300;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -71,7 +70,6 @@
     }
     .nav-links a:hover { color: var(--green-dark); }
 
-    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: grid;
@@ -143,37 +141,19 @@
       width: 75%;
       max-width: 380px;
       aspect-ratio: 3/4;
-      background: var(--green-light);
-      border: 0.5px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 0.75rem;
-      color: var(--green-dark);
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
       overflow: hidden;
-      position: relative;
+      border: 0.5px solid var(--border);
+      cursor: zoom-in;
     }
 
     .hero-image-wrap img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      position: absolute; inset: 0;
-      
+      transition: transform 0.4s ease;
     }
+    .hero-image-wrap:hover img { transform: scale(1.03); }
 
-    .img-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      color: var(--green-dark);
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-
-    /* ── GALLERY ── */
     #work {
       padding: 6rem 3.5rem;
       border-top: 0.5px solid var(--border);
@@ -201,40 +181,24 @@
     }
 
     .gallery-cell {
-      background: var(--cream);
-      border: 0.5px solid var(--border-soft);
       overflow: hidden;
       position: relative;
-      cursor: pointer;
+      cursor: zoom-in;
+      background: var(--cream);
     }
 
     .gallery-cell img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      
+      transition: transform 0.4s ease;
+      display: block;
     }
 
-    .gallery-cell .placeholder {
-      width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+    .gallery-cell:hover img { transform: scale(1.04); }
+    .gallery-cell:hover .overlay { opacity: 1; }
 
-    .gallery-cell .placeholder span {
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-light);
-    }
-
-    .gallery-cell .placeholder svg {
-      opacity: 0.3;
-    }
-
-    .gallery-cell .overlay {
+    .overlay {
       position: absolute; inset: 0;
       background: rgba(42,52,38,0.55);
       display: flex;
@@ -246,11 +210,9 @@
       transition: opacity 0.3s;
     }
 
-    .gallery-cell:hover .overlay { opacity: 1; }
-
     .overlay-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 300;
       color: var(--ivory);
       font-style: italic;
@@ -258,19 +220,17 @@
 
     .overlay-meta {
       font-size: 0.62rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(250,247,242,0.65);
-      margin-top: 0.25rem;
+      color: rgba(250,247,242,0.7);
+      margin-top: 0.3rem;
     }
 
-    /* Gallery layout spans */
     .g-wide  { grid-column: span 8; }
     .g-tall  { grid-column: span 4; grid-row: span 2; }
     .g-med   { grid-column: span 6; }
     .g-small { grid-column: span 4; }
 
-    /* ── ABOUT ── */
     #about {
       padding: 6rem 3.5rem;
       border-top: 0.5px solid var(--border);
@@ -283,25 +243,15 @@
 
     .about-img-wrap {
       aspect-ratio: 3/4;
-      background: var(--green-light);
-      border: 0.5px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 0.75rem;
       overflow: hidden;
-      position: relative;
+      border: 0.5px solid var(--border);
     }
 
     .about-img-wrap img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      
-    }
-
-    .about-img-wrap .img-label {
-      color: var(--green-dark);
+      display: block;
     }
 
     .about-content .section-tag { display: block; margin-bottom: 2rem; }
@@ -348,7 +298,6 @@
       color: var(--text-dark);
     }
 
-    /* ── CONTACT ── */
     #contact {
       padding: 6rem 3.5rem;
       border-top: 0.5px solid var(--border);
@@ -406,9 +355,7 @@
 
     .link-icon svg { width: 16px; height: 16px; stroke: var(--green-dark); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-    .contact-right {
-      padding-top: 0.5rem;
-    }
+    .contact-right { padding-top: 0.5rem; }
 
     .contact-note {
       font-size: 0.65rem;
@@ -429,7 +376,6 @@
       margin-bottom: 2.5rem;
     }
 
-    /* ── FOOTER ── */
     footer {
       padding: 1.5rem 3.5rem;
       border-top: 0.5px solid var(--border-soft);
@@ -445,7 +391,44 @@
       color: var(--text-light);
     }
 
-    /* ── RESPONSIVE ── */
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.93);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    #lightbox img {
+      max-height: 85vh;
+      max-width: 90vw;
+      object-fit: contain;
+    }
+
+    #lightbox-caption {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: 'Jost', sans-serif;
+    }
+
+    #lightbox-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 2rem;
+      color: rgba(255,255,255,0.6);
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
     @media (max-width: 768px) {
       nav { padding: 1.2rem 1.5rem; }
       .hero { grid-template-columns: 1fr; }
@@ -462,7 +445,6 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="#" class="nav-name">Sarah Hays</a>
     <ul class="nav-links">
@@ -472,14 +454,13 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
       <p class="hero-tag">Oil on canvas &nbsp;·&nbsp; Dallas, Texas</p>
       <h1 class="hero-title">
         Painting the world<br>
         in <em>light, memory,</em><br>
-        and quiet color.
+        and color.
       </h1>
       <p class="hero-desc">
         From dreamy, impressionistic landscapes to carefully observed detail — a body of work built through years of passionate exploration.
@@ -487,106 +468,72 @@
       <a href="#work" class="btn-outline">View paintings</a>
     </div>
     <div class="hero-right">
-      <div class="hero-image-wrap">
-        <!-- Replace with your painting: <img src="images/featured.jpeg" alt="Featured painting" style="display:block"> -->
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5A7A54" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span class="img-label">Replace with your painting</span>
+      <div class="hero-image-wrap" onclick="openLightbox('images/featured.jpeg', 'Featured work')">
+        <img src="images/featured.jpeg" alt="Featured painting">
       </div>
     </div>
   </section>
 
-  <!-- GALLERY -->
   <section id="work">
     <div class="section-header">
       <span class="section-tag">Selected works</span>
     </div>
     <div class="gallery-grid">
 
-      <!-- Cell 1: wide -->
-      <div class="gallery-cell g-wide">
-        <img src="images/painting-1.jpeg" alt="Painting 1">
-        <div class="placeholder">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>painting-1.jpeg</span>
-        </div>
+      <div class="gallery-cell g-wide" onclick="openLightbox('images/painting-1.jpeg', 'Impressionistic Summer Landscape — Oil on Canvas, 18 x 24 in, 2025')">
+        <img src="images/painting-1.jpeg" alt="Impressionistic Summer Landscape">
         <div class="overlay">
           <p class="overlay-title">Impressionistic Summer Landscape</p>
-          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+          <p class="overlay-meta">Oil on Canvas &nbsp;·&nbsp; 18 x 24 in &nbsp;·&nbsp; 2025</p>
         </div>
       </div>
 
-      <!-- Cell 2: tall (spans 2 rows) -->
-      <div class="gallery-cell g-tall">
-        <img src="images/painting-2.jpeg" alt="Painting 2">
-        <div class="placeholder">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>painting-2.jpeg</span>
-        </div>
+      <div class="gallery-cell g-tall" onclick="openLightbox('images/painting-2.jpeg', 'Borgese Gardens — Oil on Canvas, 18 x 24 in, 2026')">
+        <img src="images/painting-2.jpeg" alt="Borgese Gardens">
         <div class="overlay">
-          <p class="overlay-title">Impressionistic Summer LandscapeI</p>
-          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+          <p class="overlay-title">Borgese Gardens</p>
+          <p class="overlay-meta">Oil on Canvas &nbsp;·&nbsp; 18 x 24 in &nbsp;·&nbsp; 2026</p>
         </div>
       </div>
 
-      <!-- Row 2 small cells -->
-      <div class="gallery-cell g-small">
-        <img src="images/painting-3.jpeg" alt="Painting 3">
-        <div class="placeholder">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>painting-3.jpeg</span>
-        </div>
+      <div class="gallery-cell g-small" onclick="openLightbox('images/painting-3.jpeg', 'Still Life Reflection on Life and Death — Oil on Canvas, 18 x 24 in, 2024')">
+        <img src="images/painting-3.jpeg" alt="Still Life Reflection on Life and Death">
         <div class="overlay">
-          <p class="overlay-title">Impressionistic Summer LandscapeII</p>
-          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+          <p class="overlay-title">Still Life Reflection on Life and Death</p>
+          <p class="overlay-meta">Oil on Canvas &nbsp;·&nbsp; 18 x 24 in &nbsp;·&nbsp; 2024</p>
         </div>
       </div>
 
-      <div class="gallery-cell g-small">
-        <img src="images/painting-4.jpeg" alt="Painting 4">
-        <div class="placeholder">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>painting-4.jpeg</span>
-        </div>
+      <div class="gallery-cell g-small" onclick="openLightbox('images/painting-4.jpeg', 'Abi and Jean — Oil on Wood Panel, 24 x 37 in, 2025')">
+        <img src="images/painting-4.jpeg" alt="Abi and Jean">
         <div class="overlay">
-          <p class="overlay-title">Impressionistic Summer LandscapeV</p>
-          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+          <p class="overlay-title">Abi and Jean</p>
+          <p class="overlay-meta">Oil on Wood Panel &nbsp;·&nbsp; 24 x 37 in &nbsp;·&nbsp; 2025</p>
         </div>
       </div>
 
-      <!-- Row 3 -->
-      <div class="gallery-cell g-med">
-        <img src="images/painting-5.jpeg" alt="Painting 5">
-        <div class="placeholder">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>painting-5.jpeg</span>
-        </div>
+      <div class="gallery-cell g-med" onclick="openLightbox('images/painting-5.jpeg', 'Landscape of Las Colinas — Oil on Canvas, 11 x 14 in, 2025')">
+        <img src="images/painting-5.jpeg" alt="Landscape of Las Colinas">
         <div class="overlay">
           <p class="overlay-title">Landscape of Las Colinas</p>
-          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+          <p class="overlay-meta">Oil on Canvas &nbsp;·&nbsp; 11 x 14 in &nbsp;·&nbsp; 2025</p>
         </div>
       </div>
 
-      <div class="gallery-cell g-med">
-        <img src="images/painting-6.jpeg" alt="Painting 6">
-        <div class="placeholder">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>painting-6.jpeg</span>
-        </div>
+      <div class="gallery-cell g-med" onclick="openLightbox('images/painting-6.jpeg', 'Master Copy of John Singer Sargent Self Portrait — Oil on Canvas, 12 x 16 in, 2025')">
+        <img src="images/painting-6.jpeg" alt="Master Copy of John Singer Sargent Self Portrait">
         <div class="overlay">
-          <p class="overlay-title">Landscape of Las ColinasI</p>
-          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+          <p class="overlay-title">Master Copy of John Singer Sargent Self Portrait</p>
+          <p class="overlay-meta">Oil on Canvas &nbsp;·&nbsp; 12 x 16 in &nbsp;·&nbsp; 2025</p>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="about-img-wrap">
-      <!-- Replace with your photo: <img src="images/sarah.jpeg" alt="Sarah Hays" style="display:block"> -->
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5A7A54" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      <span class="img-label">Replace with your photo</span>
+      <img src="images/sarah.jpeg" alt="Sarah Hays">
     </div>
     <div class="about-content">
       <span class="section-tag">About</span>
@@ -610,7 +557,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="contact-left">
       <h2>Let's talk<br>about <em>art.</em></h2>
@@ -632,49 +578,39 @@
     </div>
     <div class="contact-right">
       <p class="contact-note">Artist's statement</p>
-      <p class="contact-tagline">"I paint because I want to slow down and really look — at light, at faces, at the places that make us feel something."</p>
+      <p class="contact-tagline">"I paint because I want to slow down and really look: at light, at faces, at the places that make us feel something."</p>
       <a href="mailto:sarahisabellaart@gmail.com" class="btn-outline">Send a message</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2026 Sarah Hays &nbsp;·&nbsp; All rights reserved</p>
     <p>Oil paintings &nbsp;·&nbsp; Dallas, Texas</p>
   </footer>
 
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <span id="lightbox-close" onclick="closeLightbox()">×</span>
+    <img id="lightbox-img" src="" alt="">
+    <p id="lightbox-caption"></p>
+  </div>
+
+  <script>
+    function openLightbox(src, caption) {
+      var lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-caption').textContent = caption;
+      lb.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
 </body>
 </html>
- 
-
-<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:999;align-items:center;justify-content:center;cursor:zoom-out;" onclick="this.style.display='none'">
-  <img id="lightbox-img" style="max-height:90vh;max-width:90vw;object-fit:contain;" src="" alt="">
-</div>
-
-<script>
-document.querySelectorAll('.gallery-cell img').forEach(img => {
-  img.style.cursor = 'zoom-in';
-  img.addEventListener('click', function(e) {
-    e.stopPropagation();
-    var lb = document.getElementById('lightbox');
-    document.getElementById('lightbox-img').src = this.src;
-    lb.style.display = 'flex';
-  });
-});
-</script>
-
-<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:999;align-items:center;justify-content:center;cursor:zoom-out;" onclick="this.style.display='none'">
-  <img id="lightbox-img" style="max-height:90vh;max-width:90vw;object-fit:contain;" src="" alt="">
-</div>
-
-<script>
-document.querySelectorAll('.gallery-cell img').forEach(img => {
-  img.style.cursor = 'zoom-in';
-  img.addEventListener('click', function(e) {
-    e.stopPropagation();
-    var lb = document.getElementById('lightbox');
-    document.getElementById('lightbox-img').src = this.src;
-    lb.style.display = 'flex';
-  });
-});
-</script>
