@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarah Hays — Oil Painter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F7F3EC;
+      --ivory: #FAF7F2;
+      --green-light: #D6E4D0;
+      --green-mid: #A8C49E;
+      --green-dark: #5A7A54;
+      --green-muted: #8BA882;
+      --text-dark: #2C2C28;
+      --text-mid: #6B6B62;
+      --text-light: #A0A094;
+      --border: rgba(90,122,84,0.18);
+      --border-soft: rgba(90,122,84,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--ivory);
+      color: var(--text-dark);
+      font-weight: 300;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3.5rem;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 0.5px solid var(--border-soft);
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-dark);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--green-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 3.5rem;
+      border-right: 0.5px solid var(--border);
+    }
+
+    .hero-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--text-dark);
+      margin-bottom: 2rem;
+    }
+    .hero-title em { font-style: italic; color: var(--green-dark); }
+
+    .hero-desc {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      max-width: 360px;
+      margin-bottom: 3rem;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 0.75rem 2.2rem;
+      border: 0.5px solid var(--green-dark);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+      width: fit-content;
+    }
+    .btn-outline:hover {
+      background: var(--green-dark);
+      color: var(--ivory);
+    }
+
+    .hero-right {
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+    }
+
+    .hero-image-wrap {
+      width: 75%;
+      max-width: 380px;
+      aspect-ratio: 3/4;
+      background: var(--green-light);
+      border: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.75rem;
+      color: var(--green-dark);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-image-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute; inset: 0;
+      display: none;
+    }
+
+    .img-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--green-dark);
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    /* ── GALLERY ── */
+    #work {
+      padding: 6rem 3.5rem;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+    }
+
+    .section-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-muted);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 260px;
+      gap: 3px;
+    }
+
+    .gallery-cell {
+      background: var(--cream);
+      border: 0.5px solid var(--border-soft);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .gallery-cell .placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .gallery-cell .placeholder span {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .gallery-cell .placeholder svg {
+      opacity: 0.3;
+    }
+
+    .gallery-cell .overlay {
+      position: absolute; inset: 0;
+      background: rgba(42,52,38,0.55);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 1.25rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-cell:hover .overlay { opacity: 1; }
+
+    .overlay-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--ivory);
+      font-style: italic;
+    }
+
+    .overlay-meta {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.65);
+      margin-top: 0.25rem;
+    }
+
+    /* Gallery layout spans */
+    .g-wide  { grid-column: span 8; }
+    .g-tall  { grid-column: span 4; grid-row: span 2; }
+    .g-med   { grid-column: span 6; }
+    .g-small { grid-column: span 4; }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 6rem 3.5rem;
+      border-top: 0.5px solid var(--border);
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-img-wrap {
+      aspect-ratio: 3/4;
+      background: var(--green-light);
+      border: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.75rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .about-img-wrap .img-label {
+      color: var(--green-dark);
+    }
+
+    .about-content .section-tag { display: block; margin-bottom: 2rem; }
+
+    .about-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.25;
+      color: var(--text-dark);
+      margin-bottom: 2rem;
+    }
+    .about-content h2 em { font-style: italic; color: var(--green-dark); }
+
+    .about-content p {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .about-detail {
+      margin-top: 2rem;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .detail-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-muted);
+    }
+
+    .detail-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--text-dark);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 6rem 3.5rem;
+      border-top: 0.5px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .contact-left h2 em { font-style: italic; color: var(--green-dark); }
+
+    .contact-left p {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      max-width: 340px;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 0.85rem;
+      transition: color 0.2s;
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid var(--border-soft);
+    }
+    .contact-link:hover { color: var(--green-dark); }
+
+    .link-icon {
+      width: 36px;
+      height: 36px;
+      border: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .link-icon svg { width: 16px; height: 16px; stroke: var(--green-dark); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    .contact-right {
+      padding-top: 0.5rem;
+    }
+
+    .contact-note {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-mid);
+      line-height: 1.7;
+      border-left: 1.5px solid var(--green-mid);
+      padding-left: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 1.5rem 3.5rem;
+      border-top: 0.5px solid var(--border-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--cream);
+    }
+
+    footer p {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 3rem 1.5rem; border-right: none; border-bottom: 0.5px solid var(--border); }
+      .hero-right { min-height: 60vw; }
+      #work { padding: 4rem 1.5rem; }
+      .gallery-grid { grid-auto-rows: 180px; }
+      .g-wide, .g-tall, .g-med, .g-small { grid-column: span 12; grid-row: span 1; }
+      #about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+      #contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-name">Sarah Hays</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Oil on canvas &nbsp;·&nbsp; Dallas, Texas</p>
+      <h1 class="hero-title">
+        Painting the world<br>
+        in <em>light, memory,</em><br>
+        and quiet color.
+      </h1>
+      <p class="hero-desc">
+        From dreamy, impressionistic landscapes to carefully observed detail — a body of work built through years of passionate exploration.
+      </p>
+      <a href="#work" class="btn-outline">View paintings</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-image-wrap">
+        <!-- Replace with your painting: <img src="images/featured.jpg" alt="Featured painting" style="display:block"> -->
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5A7A54" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span class="img-label">Replace with your painting</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="work">
+    <div class="section-header">
+      <span class="section-tag">Selected works</span>
+    </div>
+    <div class="gallery-grid">
+
+      <!-- Cell 1: wide -->
+      <div class="gallery-cell g-wide">
+        <img src="images/painting-1.jpg" alt="Painting 1">
+        <div class="placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>painting-1.jpg</span>
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">Untitled I</p>
+          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+
+      <!-- Cell 2: tall (spans 2 rows) -->
+      <div class="gallery-cell g-tall">
+        <img src="images/painting-2.jpg" alt="Painting 2">
+        <div class="placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>painting-2.jpg</span>
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">Untitled II</p>
+          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+
+      <!-- Row 2 small cells -->
+      <div class="gallery-cell g-small">
+        <img src="images/painting-3.jpg" alt="Painting 3">
+        <div class="placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>painting-3.jpg</span>
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">Untitled III</p>
+          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+
+      <div class="gallery-cell g-small">
+        <img src="images/painting-4.jpg" alt="Painting 4">
+        <div class="placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>painting-4.jpg</span>
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">Untitled IV</p>
+          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="gallery-cell g-med">
+        <img src="images/painting-5.jpg" alt="Painting 5">
+        <div class="placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>painting-5.jpg</span>
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">Untitled V</p>
+          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+
+      <div class="gallery-cell g-med">
+        <img src="images/painting-6.jpg" alt="Painting 6">
+        <div class="placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8BA882" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>painting-6.jpg</span>
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">Untitled VI</p>
+          <p class="overlay-meta">Oil on canvas &nbsp;·&nbsp; 2024</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img-wrap">
+      <!-- Replace with your photo: <img src="images/sarah.jpg" alt="Sarah Hays" style="display:block"> -->
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5A7A54" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span class="img-label">Replace with your photo</span>
+    </div>
+    <div class="about-content">
+      <span class="section-tag">About</span>
+      <h2>A life spent<br>learning to <em>see.</em></h2>
+      <p>My name is Sarah, and I am currently a Fine Arts student studying in Dallas, Texas. I have been passionately making art for most of my life and have recently been experimenting with different styles, building a body of work that I'm excited to share.</p>
+      <p>My paintings range from highly detailed pieces to loose, impressionistic work, with a recent focus on dreamy landscapes and an ongoing interest in portraiture. I'm drawn to the way oil paint holds light — the depth that builds through layers, the way colors shift and breathe.</p>
+      <div class="about-detail">
+        <div class="detail-item">
+          <span class="detail-label">Based in</span>
+          <span class="detail-value">Dallas, Texas</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Medium</span>
+          <span class="detail-value">Oil on canvas</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Available for</span>
+          <span class="detail-value">Commissions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <h2>Let's talk<br>about <em>art.</em></h2>
+      <p>Whether you're interested in a piece, a commission, or simply want to connect — I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a href="mailto:sarahisabellaart@gmail.com" class="contact-link">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </div>
+          sarahisabellaart@gmail.com
+        </a>
+        <a href="https://instagram.com/sarahisabellaart" target="_blank" rel="noopener" class="contact-link">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#5A7A54" stroke="none"/></svg>
+          </div>
+          @sarahisabellaart
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <p class="contact-note">Artist's statement</p>
+      <p class="contact-tagline">"I paint because I want to slow down and really look — at light, at faces, at the places that make us feel something."</p>
+      <a href="mailto:sarahisabellaart@gmail.com" class="btn-outline">Send a message</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Sarah Hays &nbsp;·&nbsp; All rights reserved</p>
+    <p>Oil paintings &nbsp;·&nbsp; Dallas, Texas</p>
+  </footer>
+
+</body>
+</html>
